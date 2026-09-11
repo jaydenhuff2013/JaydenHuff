@@ -1,0 +1,53 @@
+---
+title: "Google Apps Discord Bot: Manage Your Community"
+sidebarTitle: "Introduction"
+description: "The Google Apps Discord bot brings powerful moderation, auto-roles, welcome messages, and deep integrations directly into your server."
+---
+
+The Google Apps Discord bot is your all-in-one community management companion. Whether you're running a small hobby server or a large enterprise community, the bot handles moderation, automates role assignments, greets new members, and keeps a detailed audit trail — all from within Discord. This page introduces what the bot can do and points you toward the resources you need to get started.
+
+## What Is the Discord Bot?
+
+The Google Apps Discord bot is a first-party integration between the Google Apps platform and Discord. Once invited to your server, it connects to your Google Apps workspace and exposes a rich set of slash commands, automation rules, and management tools. You control everything through the Google Apps dashboard or directly in Discord — no separate app required.
+
+The bot operates in real time, reacting to server events as they happen. Whenever a member joins, a message is deleted, or a role is assigned, the bot can take automatic action, log the event, or notify your moderation team — keeping your community safe and organised with minimal manual effort.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Moderation" icon="shield-halved" href="/discord/moderation">
+    Warn, mute, kick, and ban members using intuitive slash commands. Configurable auto-mod rules catch spam, hate speech, and link abuse before a human moderator even sees it.
+  </Card>
+  <Card title="Auto-Roles" icon="tags" href="/discord/auto-roles">
+    Automatically assign or remove roles when members join, reach activity milestones, verify their identity, or react to onboarding messages.
+  </Card>
+  <Card title="Welcome Messages" icon="hand-wave" href="/discord/welcome-messages">
+    Greet new members with fully customisable embeds sent to any channel or as a direct message, complete with dynamic variables like username and server name.
+  </Card>
+  <Card title="Audit Logs" icon="clipboard-list" href="/discord/logging">
+    Record every significant server event — edits, deletions, role changes, and more — to a dedicated log channel or the Google Apps dashboard for compliance and review.
+  </Card>
+  <Card title="Slash Commands" icon="terminal" href="/discord/commands-overview">
+    A complete library of `/` commands gives moderators and admins instant access to every bot feature without leaving the Discord interface.
+  </Card>
+  <Card title="Integrations" icon="plug" href="/discord/integrations">
+    Connect your Discord server to Google Workspace tools — Sheets, Calendar, Forms, and more — to surface information and trigger workflows from inside your community.
+  </Card>
+</CardGroup>
+
+## How It Works
+
+When you invite the Google Apps bot to your server, it authenticates with the Google Apps platform using OAuth2 and registers your server inside your workspace. From that moment, the bot listens to Discord Gateway events — member joins, message activity, role updates, and so on — and maps them to automation rules you define in the dashboard.
+
+Each action the bot takes is scoped to the permissions you grant at invite time. You can start with a minimal set of permissions and expand them later as you enable new features. All configuration changes sync instantly between the dashboard and the live bot, so there is no need to restart or re-invite after updates.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/discord/quickstart">
+    Get the bot running in your server in under five minutes with our step-by-step setup guide.
+  </Card>
+  <Card title="Invite the Bot" icon="circle-plus" href="/discord/invite-bot">
+    Learn exactly which permissions to grant and how to complete the OAuth2 authorisation flow.
+  </Card>
+</CardGroup>

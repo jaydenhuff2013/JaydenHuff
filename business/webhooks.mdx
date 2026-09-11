@@ -1,0 +1,162 @@
+---
+title: "Configure Webhooks for Real-Time Event Notifications"
+sidebarTitle: "Webhooks"
+description: "Set up webhooks to receive instant HTTP notifications when events occur in your Google Apps workspace, with signature verification and retry logic."
+---
+
+Webhooks let your external systems react to activity in Google Apps the moment it happens. Instead of polling the API to check for changes, your server receives an HTTP `POST` request from Google Apps whenever a subscribed event occurs — such as a task being completed or a new team member being invited. This makes webhooks ideal for keeping external dashboards, databases, and automation pipelines in sync with your workspace in real time.
+
+<Note>
+  Webhook delivery requires a publicly accessible **HTTPS** endpoint. Plain HTTP endpoints are not supported. Use a service like [ngrok](https://ngrok.com) for local testing during development.
+</Note>
+
+## What Are Webhooks?
+
+A webhook is an HTTP callback — when a specific event occurs in Google Apps, the platform sends an HTTP `POST` request containing a JSON payload to a URL you specify. Your server receives this payload and can act on it however you need: update a database, send a notification, trigger a CI/CD pipeline, or anything else.
+
+Webhooks are available on the **Pro** plan and above.
+
+## Creating a Webhook Endpoint
+
+<Steps>
+  <Step title="Open Webhook Settings">
+    Navigate to **Settings** in the left sidebar and click **Webhooks**.
+  </Step>
+  <Step title="Add a New Webhook">
+    Click **Add Webhook** in the top-right corner of the Webhooks page.
+  </Step>
+  <Step title="Enter Your Endpoint URL">
+    Paste the full HTTPS URL of your webhook receiver (e.g., `https://yourapp.com/webhooks/googleapps`). This is the endpoint that will receive POST requests from Google Apps.
+  </Step>
+  <Step title="Select Events">
+    Check the boxes for the events you want to subscribe to. You can subscribe to individual events or select **All Events** to receive everything.
+  </Step>
+  <Step title="Save and Copy Your Secret">
+    Click **Save Webhook**. Google Apps will generate a signing secret for this endpoint — copy it and store it securely. You'll use it to verify incoming webhook signatures.
+  </Step>
+</Steps>
+
+## Available Events
+
+| Event Name         | Description                                                 |
+|--------------------|-------------------------------------------------------------|
+| `project.created`  | A new project was created in the workspace.                 |
+| `project.updated`  | A project's name, status, or settings were changed.         |
+| `task.created`     | A new task was added to any project.                        |
+| `task.completed`   | A task was marked as complete.                              |
+| `member.invited`   | A new team member was invited to the workspace.             |
+| `member.removed`   | A team member was removed from the workspace.               |
+
+## Webhook Payload
+
+Every webhook request is sent as an HTTP `POST` with a `Content-Type: application/json` header. Below is an example payload for a `task.completed` event:
+
+```json
+{
+  "event": "task.completed",
+  "timestamp": "2024-07-22T14:35:02Z",
+  "workspace_id": "ws_4jxkp09mn",
+  "data": {
+    "task": {
+      "id": "task_8xznk1p",
+      "title": "Finalize landing page copy",
+      "completed_by": {
+        "id": "usr_7kxp9z2",
+        "name": "Jane Smith",
+        "email": "jane@example.com"
+      },
+      "project_id": "proj_01hx9k2mn",
+      "completed_at": "2024-07-22T14:35:00Z",
+      "due_date": "2024-07-22"
+    }
+  }
+}
+```
+
+## Verifying Webhook Signatures
+
+Google Apps signs every webhook request using HMAC-SHA256. The signature is included in the `X-Signature` request header as a hex digest. You should always verify this signature before processing a webhook to ensure the request genuinely came from Google Apps.
+
+```javascript
+const crypto = require("crypto");
+
+function verifyWebhookSignature(rawBody, signatureHeader, secret) {
+  // Compute the expected HMAC-SHA256 signature
+  const expectedSignature = crypto
+    .createHmac("sha256", secret)
+    .update(rawBody, "utf8")
+    .digest("hex");
+
+  // Use a timing-safe comparison to prevent timing attacks
+  const trusted = Buffer.from(`sha256=${expectedSignature}`, "utf8");
+  const received = Buffer.from(signatureHeader, "utf8");
+
+  if (trusted.length !== received.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(trusted, received);
+}
+
+// Express.js example
+const express = require("express");
+const app = express();
+
+// Use raw body parser to preserve the original payload for signature verification
+app.use("/webhooks/googleapps", express.raw({ type: "application/json" }));
+
+app.post("/webhooks/googleapps", (req, res) => {
+  const signature = req.headers["x-signature"];
+  const secret = process.env.GOOGLEAPPS_WEBHOOK_SECRET;
+
+  if (!verifyWebhookSignature(req.body, signature, secret)) {
+    console.warn("Invalid webhook signature — request rejected.");
+    return res.status(401).send("Unauthorized");
+  }
+
+  const event = JSON.parse(req.body);
+
+  switch (event.event) {
+    case "task.completed":
+      console.log(`Task completed: ${event.data.task.title}`);
+      // Handle task completion logic here
+      break;
+    case "member.invited":
+      console.log(`New member invited: ${event.data.member.email}`);
+      break;
+    default:
+      console.log(`Received event: ${event.event}`);
+  }
+
+  // Respond with 200 quickly to acknowledge receipt
+  res.status(200).send("OK");
+});
+
+app.listen(3000, () => console.log("Webhook server running on port 3000"));
+```
+
+## Retry Logic
+
+If your endpoint returns a non-`2xx` HTTP status code or does not respond within **10 seconds**, Google Apps considers the delivery a failure and will retry automatically. Retries follow an exponential backoff schedule:
+
+| Attempt | Delay        |
+|---------|--------------|
+| 1st     | 1 minute     |
+| 2nd     | 5 minutes    |
+| 3rd     | 30 minutes   |
+| 4th     | 2 hours      |
+| 5th     | 8 hours      |
+
+After 5 failed attempts, the delivery is marked as permanently failed and no further retries are made. You can view failed deliveries and manually re-trigger them from the **Webhooks** settings page.
+
+To prevent duplicate processing, design your webhook handler to be **idempotent** — use the event's `timestamp` and `data.id` fields to detect and safely ignore duplicates.
+
+## Testing Webhooks
+
+You can send a test payload to your endpoint at any time without waiting for a real event:
+
+1. Go to **Settings > Webhooks** and click on an existing webhook.
+2. Scroll to the **Testing** section and click **Send Test Payload**.
+3. Google Apps will POST a sample event to your endpoint and display the response status and body in the dashboard.
+
+Use the test feature to confirm your server is reachable and your signature verification logic is working correctly before going live.

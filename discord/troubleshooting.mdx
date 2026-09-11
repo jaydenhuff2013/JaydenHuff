@@ -1,0 +1,139 @@
+---
+title: "Troubleshoot Common Discord Bot Issues"
+sidebarTitle: "Troubleshooting"
+description: "Diagnose and fix the most common Google Apps Discord bot problems, from unresponsive commands to missing logs and role assignment failures."
+---
+
+Even when everything is set up correctly, Discord bots can occasionally behave unexpectedly due to permission changes, role hierarchy conflicts, or temporary connectivity issues. This guide walks you through the most common problems and the exact steps needed to resolve them.
+
+---
+
+## Bot Not Responding to Commands
+
+If the bot is present in your server but does not respond when you run a command, work through the following checks in order.
+
+<Steps>
+  <Step title="Confirm the bot is online">
+    Look for the bot in your server's member list. Its status indicator should be green (online). If it appears grey (offline), visit the [Google Apps Status Page](https://status.googleapps.com) to check for a known outage. If no outage is listed, try re-inviting the bot from your dashboard.
+  </Step>
+  <Step title="Check the bot's channel permissions">
+    Navigate to the channel where you ran the command. Open **Channel Settings → Permissions** and confirm that the bot's role has **View Channel** and **Send Messages** enabled. A channel-level permission override can silently block responses even when server-level permissions appear correct.
+  </Step>
+  <Step title="Verify command syntax">
+    Ensure you are using the correct command prefix or slash command format. Type `/` in any channel to browse available slash commands registered by the bot. If the bot's commands do not appear in the list, its slash commands may need to be re-synced — contact support to request a re-sync.
+  </Step>
+  <Step title="Check command role restrictions">
+    In the Google Apps dashboard, navigate to **Command Permissions** for your server and confirm that your role is permitted to run the command in question. If your role is on the deny list, ask a server administrator to update the permission settings.
+  </Step>
+</Steps>
+
+---
+
+## Bot Cannot Assign Roles
+
+When the bot fails to assign or remove a role from a member, it is almost always caused by one of two issues: a missing permission or a role hierarchy conflict.
+
+<Steps>
+  <Step title="Confirm the Manage Roles permission is granted">
+    Go to **Server Settings → Integrations → Google Apps Bot** and verify that **Manage Roles** is listed as an allowed permission. If it is absent, click **Edit** and enable it, then save.
+  </Step>
+  <Step title="Check the role hierarchy">
+    In Discord, a bot can only assign or remove roles that sit **below** its own highest role in the server's role list. Go to **Server Settings → Roles** and drag the Google Apps bot's role above all roles it needs to manage. Changes take effect immediately.
+  </Step>
+  <Step title="Retry the role assignment">
+    After adjusting the hierarchy, retry the command. If the error persists, check whether the target member has a role higher than the bot — the bot cannot modify roles of members with a higher-ranked role.
+  </Step>
+</Steps>
+
+<Warning>
+  Changing role positions in a live server can affect permissions for all members currently holding those roles. Review the impact before reordering roles, especially for roles with elevated permissions such as Moderator or Admin.
+</Warning>
+
+---
+
+## Welcome Messages Not Sending
+
+If new members join your server but no welcome message appears, check the following.
+
+<Steps>
+  <Step title="Confirm a welcome channel is configured">
+    Open your Google Apps dashboard, select your server, and go to **Configuration → Welcome Messages**. Verify that a channel has been selected. If the field is blank, choose a channel and save your settings.
+  </Step>
+  <Step title="Check the bot's permissions in the welcome channel">
+    In Discord, open the welcome channel's settings and navigate to **Permissions**. Ensure the bot's role has **View Channel** and **Send Messages** explicitly allowed (or at least not denied). If **Embed Links** is also required by your welcome message template, enable that permission too.
+  </Step>
+  <Step title="Test with a dummy join event">
+    In the Google Apps dashboard, use the **Send Test Welcome Message** button (available on the Welcome Messages configuration panel) to trigger a preview. If the test message appears, the configuration is correct and the issue may have been a one-time glitch.
+  </Step>
+</Steps>
+
+---
+
+## Moderation Commands Failing
+
+If ban, kick, mute, or other moderation commands return an error, follow these steps.
+
+<Steps>
+  <Step title="Verify moderation permissions are granted">
+    Go to **Server Settings → Integrations → Google Apps Bot** and confirm that **Kick Members** and **Ban Members** are enabled. For mute commands, ensure **Manage Roles** (to assign a muted role) or **Timeout Members** is also permitted.
+  </Step>
+  <Step title="Check the target member's role">
+    Discord's hierarchy rules prevent any user — or bot — from moderating a member whose highest role is equal to or above theirs. Confirm that the target member's highest role is below the bot's role in **Server Settings → Roles**.
+  </Step>
+  <Step title="Ensure the command is used in a permitted channel">
+    If your server has restricted moderation commands to specific channels (via the dashboard's **Command Permissions** settings), make sure you are running the command in an approved channel.
+  </Step>
+</Steps>
+
+<Warning>
+  Ban actions are permanent unless manually reversed. Before issuing a ban command, double-check the target member's username and discriminator to avoid accidentally banning the wrong user. Bans can be lifted in **Server Settings → Bans**, but any messages deleted during the ban cannot be recovered.
+</Warning>
+
+---
+
+## Logs Not Appearing
+
+If server events (joins, leaves, moderation actions, etc.) are not being recorded in your log channel, troubleshoot as follows.
+
+<Steps>
+  <Step title="Confirm a log channel is set">
+    In the Google Apps dashboard, go to **Configuration → Logging** and verify that a log channel has been selected. If none is configured, choose a channel and click **Save**.
+  </Step>
+  <Step title="Check bot permissions in the log channel">
+    Open the log channel's settings in Discord and confirm the bot's role has **View Channel**, **Send Messages**, and **Embed Links** permissions. Without these, the bot cannot post log entries.
+  </Step>
+  <Step title="Enable View Audit Log permission">
+    Some log events — such as message deletions by others and manual role changes — require the **View Audit Log** permission. Grant this permission to the bot's role under **Server Settings → Integrations → Google Apps Bot**.
+  </Step>
+  <Step title="Review which events are enabled">
+    In the dashboard's **Logging** configuration panel, confirm that the event types you expect to see (e.g., Member Join, Member Leave, Message Delete) are toggled on. Individual event types can be enabled or disabled independently.
+  </Step>
+</Steps>
+
+---
+
+## Bot Went Offline
+
+If the bot has gone offline and is not reconnecting on its own, follow these steps to restore it.
+
+<Steps>
+  <Step title="Check the Google Apps status page">
+    Visit [status.googleapps.com](https://status.googleapps.com) to see if there is an active incident or scheduled maintenance affecting the Discord bot service. If a known issue is listed, no action is required — the service will be restored automatically.
+  </Step>
+  <Step title="Check your dashboard for alerts">
+    Log in to your Google Apps dashboard and look for any banner alerts or notification messages. Issues such as an expired token or a billing hold can cause the bot to disconnect.
+  </Step>
+  <Step title="Re-invite the bot to your server">
+    If the bot remains offline with no listed incident, navigate to **Integrations** in your dashboard, click **Remove from Discord** for the affected server, and then click **Add to Discord** to re-authorize it. Your saved configuration will be preserved.
+  </Step>
+</Steps>
+
+<Warning>
+  Removing and re-inviting the bot will temporarily reset any Discord-side permission overrides you have applied at the channel level. Re-check and reapply channel-specific permission settings after the bot rejoins the server.
+</Warning>
+
+---
+
+<Card title="Contact Support" icon="envelope" href="mailto:support@googleapps.com">
+  If you can't resolve the issue, reach out to our support team.
+</Card>

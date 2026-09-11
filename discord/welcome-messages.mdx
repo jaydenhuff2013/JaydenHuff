@@ -1,0 +1,71 @@
+---
+title: "Custom Welcome Messages for New Discord Members"
+sidebarTitle: "Welcome Messages"
+description: "Configure personalized channel welcome messages, private DM greetings, farewell messages, and rich embed designs to greet every new member warmly."
+---
+
+First impressions matter. Google Apps lets you craft warm, personalized welcome messages that greet new members the moment they arrive — and send them off gracefully when they leave. Every aspect of the message, from the text and variables to the embed color and footer, is configurable through the dashboard without any coding required.
+
+<Tip>
+  Keep your welcome messages concise and friendly. New members are often quickly scanning several channels at once — a short, warm greeting with clear next steps (like where to introduce themselves or pick roles) is far more effective than a long wall of text.
+</Tip>
+
+## Channel Welcome Messages
+
+Channel welcome messages are posted automatically in a designated channel whenever a new member joins your server. To set one up, navigate to **Welcome Messages → Channel Message** in the dashboard.
+
+From the message editor you can:
+
+- Select the **target channel** where welcome messages will appear.
+- Write your **message content** using plain text, variables, or Markdown.
+- Optionally attach a **rich embed** (see the [Embed Builder](#embed-builder) section below).
+- **Preview** the rendered message before saving, with your own account substituted as the sample member.
+
+## Welcome Message Variables
+
+Variables are dynamic placeholders that are replaced with real values when the message is sent. Use them to personalize each greeting automatically.
+
+| Variable | Description | Example Output |
+|---|---|---|
+| `{user}` | The new member's username | `alex_dev` |
+| `{user.mention}` | Mentions the member with a clickable ping | `@alex_dev` |
+| `{user.id}` | The member's unique Discord user ID | `123456789012345678` |
+| `{server}` | The name of the server | `The Dev Lounge` |
+| `{membercount}` | Total number of members in the server | `1,042` |
+| `{date}` | The date the member joined (UTC) | `June 14, 2025` |
+
+Here is an example welcome message making use of several variables:
+
+```
+Welcome to **{server}**, {user.mention}! 🎉
+
+You're our **{membercount}th** member — we're so glad you're here.
+Head over to #rules for the community guidelines, then introduce yourself in #introductions.
+
+Joined: {date}  |  User ID: {user.id}
+```
+
+## DM Welcome Messages
+
+In addition to a channel message, you can send each new member a private direct message automatically. DM welcome messages are perfect for sharing server rules, a getting-started guide, or a link to pick roles — content you want every member to see without cluttering a public channel.
+
+Configure DM messages under **Welcome Messages → DM Message**. The same variables and embed options available for channel messages are supported here. Note that if a member has DMs disabled for server members, the message will not be delivered, so avoid using DMs as the sole place to share critical information.
+
+## Farewell Messages
+
+Farewell messages are posted to a designated channel when a member leaves — whether voluntarily, via a kick, or after a ban. They can help keep your community aware of turnover and add a human touch.
+
+Configure farewell messages under **Welcome Messages → Farewell Message**. All the same variables are available, though `{user.mention}` will render as a plain username tag after the member has left (since they can no longer be pinged). You can direct the farewell message to the same channel as your welcome message or a separate one.
+
+## Embed Builder
+
+Rich embeds make your welcome and farewell messages stand out with structured formatting, color accents, and imagery. Open the **Embed Builder** from within any message editor to customize:
+
+- **Color** — Set a hex color for the left-side accent bar (e.g., `#ef7025` to match your server brand).
+- **Title** — A bold heading displayed at the top of the embed.
+- **Description** — The main body text of the embed, supporting Markdown and variables.
+- **Thumbnail** — Display a small image in the top-right corner. Use `{user.avatar}` to automatically show the new member's profile picture.
+- **Footer** — Smaller text at the bottom of the embed, useful for a tagline or server motto.
+- **Timestamp** — Toggle a UTC timestamp in the footer showing when the message was sent.
+
+Changes in the embed builder are reflected instantly in the live preview panel on the right side of the dashboard.

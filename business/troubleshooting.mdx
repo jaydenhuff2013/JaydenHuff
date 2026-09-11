@@ -1,0 +1,176 @@
+---
+title: "Troubleshoot Common Business Application Issues"
+sidebarTitle: "Troubleshooting"
+description: "Step-by-step guidance for diagnosing and resolving the most common issues in the Google Apps Business application, from login problems to webhook failures."
+---
+
+Even the best applications can run into hiccups. This guide walks you through the most common issues encountered in the Google Apps Business application and provides clear, actionable steps to resolve them. If you work through a section and still can't resolve your issue, our support team is here to help.
+
+---
+
+## Cannot Log In
+
+If you're unable to sign in to your Google Apps account, the steps below cover the most common causes.
+
+<Steps>
+  <Step title="Check your credentials">
+    Confirm you are using the correct email address associated with your account. Passwords are case-sensitive — make sure Caps Lock is not enabled.
+  </Step>
+  <Step title="Reset your password">
+    On the login page, click **Forgot password?** and enter your account email. You'll receive a password reset link within a few minutes. Check your spam or junk folder if it doesn't arrive in your inbox.
+  </Step>
+  <Step title="Recover access with two-factor authentication (2FA)">
+    If 2FA is enabled and you've lost access to your authenticator app:
+
+    - Click **Use a recovery code** on the 2FA prompt.
+    - Enter one of the single-use recovery codes you saved when setting up 2FA.
+
+    If you no longer have your recovery codes, contact [support@googleapps.com](mailto:support@googleapps.com) with proof of account ownership to initiate a manual account recovery.
+  </Step>
+  <Step title="Check for account suspension">
+    If you see a message indicating your account has been suspended, this may be due to a billing issue or a policy violation. Go to **Settings → Billing** or contact support to resolve the suspension.
+  </Step>
+</Steps>
+
+---
+
+## Invitation Email Not Received
+
+Team members sometimes report not receiving their workspace invitation email. Follow these steps to resolve it.
+
+<Steps>
+  <Step title="Check spam and junk folders">
+    Invitation emails are sent from `noreply@googleapps.com`. Ask the invitee to search their spam, junk, or promotions folder for an email from this address.
+  </Step>
+  <Step title="Verify the email address">
+    In your workspace, go to **Settings → Members** and confirm the invitation was sent to the correct email address. Typos are a common cause of missed invitations.
+  </Step>
+  <Step title="Resend the invitation">
+    If the email address is correct, click the **⋯** menu next to the pending invitation and select **Resend Invite**. A fresh invitation email will be dispatched immediately.
+  </Step>
+  <Step title="Ask the invitee to check for a corporate email filter">
+    Some organizations use email filtering or allowlisting. The invitee may need to ask their IT department to allowlist `@googleapps.com` as a trusted sender domain.
+  </Step>
+</Steps>
+
+---
+
+## API Returns 401 Unauthorized
+
+A `401 Unauthorized` response means the server could not authenticate your request. This is almost always a configuration issue with your API key.
+
+<Steps>
+  <Step title="Verify your API key is active">
+    Navigate to **Settings → API Keys** and confirm the key you're using is listed and has an **Active** status. If the key was recently regenerated or deleted, create a new one.
+  </Step>
+  <Step title="Pass the key in the Authorization header">
+    The API key must be included in every request using the `Authorization` header in Bearer format:
+
+    ```http
+    Authorization: Bearer YOUR_API_KEY
+    ```
+
+    Do not pass the key as a query parameter or in the request body, as these methods are not supported.
+  </Step>
+  <Step title="Check for whitespace or encoding issues">
+    Copy-pasting API keys can sometimes introduce invisible whitespace characters. Re-copy the key directly from the **Settings → API Keys** page and ensure there are no leading or trailing spaces.
+  </Step>
+  <Step title="Verify workspace access">
+    If you belong to multiple workspaces, ensure the API key was generated for the correct workspace. API keys are scoped per workspace and cannot be used across workspaces.
+  </Step>
+</Steps>
+
+---
+
+## Webhook Not Firing
+
+If your registered webhook endpoint is not receiving events, work through the following checks.
+
+<Steps>
+  <Step title="Confirm the endpoint uses HTTPS">
+    Google Apps only delivers webhook payloads to secure **HTTPS** endpoints. Plain HTTP endpoints will be rejected. Ensure your server has a valid TLS certificate from a trusted certificate authority.
+  </Step>
+  <Step title="Check that the correct event types are enabled">
+    Go to **Settings → Webhooks**, select your webhook, and review the **Event Types** section. Make sure all the events you want to receive are toggled on. Changes take effect immediately.
+  </Step>
+  <Step title="Verify your endpoint is reachable">
+    Use the **Send Test Event** button in the webhook settings panel to dispatch a sample payload to your endpoint. If the test fails, check your server logs and firewall rules to ensure the endpoint is publicly accessible.
+  </Step>
+  <Step title="Validate webhook signature verification">
+    If your endpoint rejects incoming requests, confirm your signature verification logic is correct. Each payload includes an `X-GoogleApps-Signature` header containing an HMAC-SHA256 signature. Compare it against the signature you compute using your webhook secret. A mismatch will cause your server to reject the delivery. See the [Webhooks Reference](/business/webhooks) for sample code.
+  </Step>
+</Steps>
+
+---
+
+## Integration Not Connecting
+
+If a third-party integration (e.g., Slack, GitHub, Jira) fails to connect or stops syncing, follow these steps.
+
+<Steps>
+  <Step title="Re-authorize the integration">
+    Go to **Settings → Integrations**, click the integration in question, and select **Disconnect**. Once disconnected, click **Connect** again and complete the authorization flow in the third-party app. This refreshes the OAuth token and often resolves stale-connection issues.
+  </Step>
+  <Step title="Check required permissions">
+    During the authorization flow, ensure you grant all requested permissions. If you or your organization administrator denied specific scopes, the integration may not function correctly. Review the required scopes in the [Integrations Guide](/business/integrations-overview) for the specific tool.
+  </Step>
+  <Step title="Check third-party service status">
+    If the integration was previously working and has suddenly stopped, the third-party service may be experiencing an outage. Check the status page of the relevant service (e.g., [Slack Status](https://status.slack.com), [GitHub Status](https://githubstatus.com)).
+  </Step>
+</Steps>
+
+---
+
+## Slow Dashboard Loading
+
+A sluggish dashboard experience is usually caused by a browser or network issue rather than the application itself.
+
+<Steps>
+  <Step title="Clear your browser cache and cookies">
+    Stale cached assets can cause performance issues. In your browser settings, clear the cache and cookies for `googleapps.com`, then reload the page.
+  </Step>
+  <Step title="Disable browser extensions">
+    Ad blockers, VPN extensions, and other browser plugins can interfere with dashboard performance. Try loading the dashboard in a private/incognito window (which disables most extensions) to see if performance improves.
+  </Step>
+  <Step title="Check your network connection">
+    Run a speed test at [fast.com](https://fast.com) or a similar service. If your connection is slow or unstable, try switching to a wired connection or a different network.
+  </Step>
+  <Step title="Try a different browser or device">
+    If the issue persists, try accessing the dashboard from a different supported browser (Chrome, Firefox, Edge, or Safari) or a different device to rule out a local environment issue.
+  </Step>
+  <Step title="Contact support">
+    If performance issues persist across browsers and networks, the problem may be on our end. Contact [support@googleapps.com](mailto:support@googleapps.com) and include your workspace ID, the browser you're using, and a description of the slowness so we can investigate.
+  </Step>
+</Steps>
+
+---
+
+## Cannot Delete Project
+
+If the **Delete Project** option is unavailable or grayed out, there are a couple of things to check.
+
+<Warning>
+  Deleting a project is **permanent and cannot be undone**. All tasks, files, comments, and history associated with the project will be removed. Export any important data before proceeding.
+</Warning>
+
+<Steps>
+  <Step title="Verify your role">
+    Only workspace **Owners** and **Admins** can delete projects. If you are a Member, you will not see the delete option. Contact your workspace Admin to request deletion on your behalf.
+  </Step>
+  <Step title="Archive the project first">
+    Active projects must be **archived** before they can be deleted. To archive a project, open the project, go to **Project Settings → General**, and click **Archive Project**. Once archived, the **Delete Project** option will become available in the same settings panel.
+  </Step>
+  <Step title="Delete the archived project">
+    After archiving, return to **Project Settings → General → Danger Zone** and click **Delete Project**. Type the project name to confirm and click **Confirm Delete**.
+  </Step>
+</Steps>
+
+---
+
+## Still Need Help?
+
+If you've worked through the relevant section above and the issue persists, our support team is ready to assist you.
+
+<Card title="Contact Support" icon="envelope" href="mailto:support@googleapps.com">
+  Reach out to our support team if you need more help.
+</Card>

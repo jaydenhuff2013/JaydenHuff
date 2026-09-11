@@ -1,0 +1,124 @@
+---
+title: "Invite and Authorize the Google Apps Bot"
+sidebarTitle: "Invite Bot"
+description: "Learn how to generate your bot invite link, grant the right OAuth2 scopes and permissions, and verify the bot is online in your Discord server."
+---
+
+Inviting the Google Apps bot to your Discord server is a two-step process: you generate an invite link that specifies the OAuth2 scopes and permissions the bot needs, then you authorise the bot through Discord's standard OAuth2 consent screen. This page explains each part of that process in detail, describes why every requested permission is necessary, and helps you troubleshoot common issues that can arise during authorisation.
+
+## Invite Link
+
+The easiest way to get your personalised invite link is through the Google Apps dashboard.
+
+1. Log in at [app.googleapps.com](https://app.googleapps.com).
+2. In the left sidebar, navigate to **Discord → Connect Server**.
+3. Click **Generate Invite Link**. The dashboard automatically populates the correct client ID, scopes, and recommended permissions.
+4. Copy the link and open it in your browser, or click **Open in Discord** to jump straight to the authorisation screen.
+
+If you prefer to construct the link manually, the format is:
+
+```
+https://discord.com/api/oauth2/authorize
+  ?client_id=YOUR_CLIENT_ID
+  &permissions=1099645117504
+  &scope=bot%20applications.commands
+```
+
+Both the `bot` scope (which adds the bot user to your server) and the `applications.commands` scope (which registers slash commands) are required. Omitting `applications.commands` will prevent slash commands from appearing in the Discord interface.
+
+<Note>
+  Replace `YOUR_CLIENT_ID` with the **Application ID** shown on the **General Information** page of your application in the [Discord Developer Portal](https://discord.com/developers/applications).
+</Note>
+
+## Required Permissions
+
+The table below lists every permission the Google Apps bot requests and explains why each one is needed. Granting fewer permissions than listed will disable the corresponding features.
+
+| Permission | Purpose |
+|---|---|
+| **Manage Roles** | Assign and revoke roles for auto-role rules, verification flows, and activity-based rewards. |
+| **Kick Members** | Execute kick actions triggered by moderation slash commands or auto-mod threshold rules. |
+| **Ban Members** | Execute ban actions and query the server ban list for moderation lookups. |
+| **Manage Messages** | Delete messages flagged by auto-mod filters (spam, disallowed links, hate speech). |
+| **Read Message History** | Scan previous messages when performing bulk-delete or when auto-mod rules are first activated. |
+| **View Audit Log** | Read Discord's native audit log to populate the Google Apps audit dashboard and detect external changes. |
+| **Send Messages** | Post welcome messages, command responses, moderation notifications, and log summaries to channels. |
+
+<Warning>
+  You can grant the **Administrator** permission instead of the individual permissions above. While this simplifies the invite flow, Administrator gives the bot **complete, unrestricted access** to your entire server — including channels, roles, and settings. This is acceptable for testing but is strongly discouraged in production communities. Always prefer the minimum required permissions in live environments.
+</Warning>
+
+## Authorizing with OAuth2
+
+When you open the invite link, Discord presents a standard OAuth2 consent screen. Here is what happens at each stage:
+
+1. **Login check** — Discord confirms you are logged in to the account that has Manage Server permission on the target server.
+2. **Server selection** — A dropdown lists every server where you hold Manage Server permission. Select the server you want to add the bot to.
+3. **Permission review** — Discord displays the permissions requested by the invite link. You can deselect individual permissions at this stage, but doing so will disable the features that depend on them.
+4. **Authorisation** — Click **Authorise** and complete any CAPTCHA challenge. Discord redirects you to a confirmation page, and the bot user joins your server immediately.
+
+The OAuth2 flow also exchanges a short-lived code for an access token behind the scenes, which the Google Apps platform stores securely to make API calls on your behalf. No passwords are transmitted — the flow is entirely token-based.
+
+## Verifying the Bot Is Online
+
+After authorising, confirm the bot has joined and is connected before configuring features.
+
+1. Open Discord and go to the **Members** list in your server (click the people icon in the top-right of any channel). The bot should appear with a green **online** status indicator.
+2. Navigate to a channel where the bot has **Send Messages** permission and type `/ping`.
+3. The bot will reply with a latency response:
+
+```
+🏓 Pong! Latency: 42ms | API: 38ms
+```
+
+4. In the Google Apps dashboard under **Discord → Connected Servers**, your server should show a **Connected** badge with a green dot.
+
+<Tip>
+  If the bot appears as **offline** in the Members list, check that the bot token entered in the Google Apps dashboard is correct and has not been reset. You can update it under **Discord → Server Settings → Bot Token**.
+</Tip>
+
+## Troubleshooting
+
+<Accordion title="The bot does not appear in my server after authorising">
+  This usually means the authorisation did not complete successfully. Check the following:
+
+  - Confirm you selected the correct server from the dropdown on the consent screen.
+  - Make sure you clicked **Authorise** (not just closed the tab).
+  - Verify you hold the **Manage Server** permission on the target server — without it, the server will not appear in the dropdown.
+  - Try opening the invite link in a private/incognito browser window to rule out a cached login session issue.
+</Accordion>
+
+<Accordion title="Slash commands do not appear when I type /">
+  Slash commands can take **up to one hour** to propagate globally after first registration. If commands are still missing after an hour:
+
+  - Confirm the `applications.commands` scope was included in your invite link. If it was omitted, you must re-invite the bot using a link that includes this scope.
+  - In the Google Apps dashboard, go to **Discord → Server Settings** and click **Re-register Commands** to force a fresh registration.
+  - Check that the bot has permission to use slash commands in the channel (the **Use Application Commands** permission must not be explicitly denied).
+</Accordion>
+
+<Accordion title="I get a 'Missing Permissions' error when the bot tries to act">
+  The bot is trying to perform an action it does not have permission for. To resolve this:
+
+  - Go to **Server Settings → Roles** in Discord and locate the bot's role.
+  - Compare the permissions assigned to that role against the Required Permissions table above.
+  - If a needed permission is missing, either add it to the bot's role or re-invite the bot using an updated invite link.
+  - Also check that the bot's role is positioned **above** any roles it needs to manage in the role hierarchy. Discord prevents bots from assigning roles that are higher than their own.
+</Accordion>
+
+<Accordion title="The OAuth2 authorisation page shows an 'Invalid Client' error">
+  This error means the `client_id` in the invite URL does not match a valid Discord application. Verify that:
+
+  - You are using the **Application ID** (found on the General Information page), not the bot's user ID or client secret.
+  - The application has not been deleted from the Discord Developer Portal.
+  - There are no extra spaces or characters in the URL you copied.
+
+  Regenerate the invite link from the Google Apps dashboard to ensure the correct ID is used.
+</Accordion>
+
+<Accordion title="The bot joined but shows as offline immediately">
+  An offline bot typically means the bot process is not running or the token is invalid.
+
+  - In the Google Apps dashboard, navigate to **Discord → Server Settings** and confirm the bot token is saved.
+  - If you recently reset the token in the Discord Developer Portal, update it in the dashboard — old tokens are permanently invalidated.
+  - Check the **Status** page at [status.googleapps.com](https://status.googleapps.com) to rule out a platform-wide outage.
+</Accordion>

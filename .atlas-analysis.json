@@ -1,0 +1,119 @@
+{
+  "projectType": "saas",
+  "projectName": "Google Apps",
+  "projectDescription": "A dual-platform suite offering a Discord server management bot application and a business operations application, both accessible from a single dashboard.",
+  "theme": "luma",
+  "primaryColor": "#ef7025",
+  "lightColor": "#eec9bc",
+  "darkColor": "#4fa1ab",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Discord App",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "discord/introduction",
+              "discord/quickstart",
+              "discord/invite-bot"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "discord/moderation",
+              "discord/auto-roles",
+              "discord/welcome-messages",
+              "discord/logging"
+            ]
+          },
+          {
+            "group": "Commands",
+            "pages": [
+              "discord/commands-overview",
+              "discord/admin-commands",
+              "discord/utility-commands"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "discord/server-settings",
+              "discord/permissions",
+              "discord/integrations"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "discord/faq",
+              "discord/troubleshooting"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Business App",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "business/introduction",
+              "business/quickstart",
+              "business/account-setup"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "business/dashboard",
+              "business/team-management",
+              "business/projects",
+              "business/analytics"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "business/integrations-overview",
+              "business/api-access",
+              "business/webhooks"
+            ]
+          },
+          {
+            "group": "Billing & Account",
+            "pages": [
+              "business/billing",
+              "business/plans",
+              "business/account-settings"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "business/faq",
+              "business/troubleshooting"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Discord bot with moderation, auto-roles, welcome messages, and logging",
+    "Business dashboard with team management and project tracking",
+    "Analytics and reporting for both platforms",
+    "Webhook and API integrations for the business app",
+    "Customizable permissions and server settings for Discord",
+    "Flexible billing plans with account management"
+  ],
+  "publicApiSurface": [
+    "POST /api/webhooks",
+    "GET /api/analytics",
+    "GET /api/team/members",
+    "POST /api/projects",
+    "GET /api/billing/plans",
+    "Discord slash commands: /ban, /kick, /mute, /warn, /role, /logs"
+  ]
+}

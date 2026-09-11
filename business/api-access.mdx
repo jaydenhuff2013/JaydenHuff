@@ -1,0 +1,211 @@
+---
+title: "REST API Reference for Google Apps Business"
+sidebarTitle: "API Access"
+description: "Authenticate with API keys and interact with projects, tasks, team members, and analytics using the Google Apps REST API."
+---
+
+The Google Apps REST API gives you programmatic access to everything in your workspace — projects, tasks, team members, and analytics. Whether you're building a custom integration, automating repetitive workflows, or pulling data into an internal dashboard, the API provides a consistent, predictable interface to work with. All requests and responses use JSON.
+
+<Warning>
+  Never expose your API key in client-side code, public repositories, or any environment that is accessible to others. Treat your API key like a password. If a key is compromised, revoke it immediately from **Settings > API** and generate a new one.
+</Warning>
+
+## Authentication
+
+Google Apps uses API key authentication. To generate a key:
+
+1. Go to **Settings > API** in your Google Apps workspace.
+2. Click **Generate New API Key** and give it a descriptive name.
+3. Copy the key — it is only shown once. Store it securely (e.g., in an environment variable or a secrets manager).
+
+Pass your API key in the `Authorization` header of every request:
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Base URL
+
+All API requests are made to the following base URL:
+
+```
+https://api.googleapps.com/v1
+```
+
+Append the endpoint path to this base URL for every request (e.g., `https://api.googleapps.com/v1/projects`).
+
+## Rate Limits
+
+| Plan       | Rate Limit              |
+|------------|-------------------------|
+| Free       | 100 requests per minute |
+| Pro        | 1,000 requests per minute |
+| Business   | Unlimited               |
+| Enterprise | Custom                  |
+
+When you exceed the rate limit, the API returns a `429 Too Many Requests` response. The response includes a `Retry-After` header indicating how many seconds to wait before retrying.
+
+## Key Endpoints
+
+### List All Projects
+
+Retrieve a list of all projects in your workspace.
+
+```bash
+curl -X GET "https://api.googleapps.com/v1/projects" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"
+```
+
+**Response:**
+
+```json
+{
+  "data": [
+    {
+      "id": "proj_01hx9k2mn",
+      "name": "Website Redesign",
+      "status": "active",
+      "created_at": "2024-03-15T10:30:00Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+### Create a Project
+
+Create a new project in your workspace.
+
+```bash
+curl -X POST "https://api.googleapps.com/v1/projects" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Mobile App Launch",
+    "description": "Q3 mobile app release campaign",
+    "due_date": "2024-09-30",
+    "visibility": "team"
+  }'
+```
+
+**Request body:**
+
+```json
+{
+  "name": "Mobile App Launch",
+  "description": "Q3 mobile app release campaign",
+  "due_date": "2024-09-30",
+  "visibility": "team"
+}
+```
+
+---
+
+### List Team Members
+
+Retrieve all members in your workspace.
+
+```bash
+curl -X GET "https://api.googleapps.com/v1/team/members" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"
+```
+
+**Response:**
+
+```json
+{
+  "data": [
+    {
+      "id": "usr_7kxp9z2",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "role": "admin",
+      "joined_at": "2024-01-10T08:00:00Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+### Create a Task
+
+Add a new task to a project.
+
+```bash
+curl -X POST "https://api.googleapps.com/v1/tasks" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_id": "proj_01hx9k2mn",
+    "title": "Write API documentation",
+    "assignee_id": "usr_7kxp9z2",
+    "due_date": "2024-08-01",
+    "priority": "high"
+  }'
+```
+
+**Request body:**
+
+```json
+{
+  "project_id": "proj_01hx9k2mn",
+  "title": "Write API documentation",
+  "assignee_id": "usr_7kxp9z2",
+  "due_date": "2024-08-01",
+  "priority": "high"
+}
+```
+
+---
+
+### Get Analytics Summary
+
+Retrieve an analytics summary for your workspace, including task completion rates and team activity.
+
+```bash
+curl -X GET "https://api.googleapps.com/v1/analytics?range=last_30_days" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"
+```
+
+**Response:**
+
+```json
+{
+  "period": "last_30_days",
+  "tasks_created": 142,
+  "tasks_completed": 118,
+  "completion_rate": 0.83,
+  "active_members": 12,
+  "projects_active": 5
+}
+```
+
+## Error Codes
+
+| Status Code | Name                  | Description                                                                 |
+|-------------|-----------------------|-----------------------------------------------------------------------------|
+| `400`       | Bad Request           | The request body or query parameters are malformed or missing required fields. |
+| `401`       | Unauthorized          | The API key is missing, invalid, or has been revoked.                        |
+| `403`       | Forbidden             | Your account does not have permission to perform this action.                |
+| `404`       | Not Found             | The requested resource does not exist or has been deleted.                   |
+| `429`       | Too Many Requests     | You have exceeded your plan's rate limit. Check the `Retry-After` header.    |
+| `500`       | Internal Server Error | An unexpected error occurred on the server. Try again or contact support.    |
+
+All error responses follow this structure:
+
+```json
+{
+  "error": {
+    "code": 404,
+    "message": "Project not found.",
+    "request_id": "req_8fxkp2m9"
+  }
+}
+```

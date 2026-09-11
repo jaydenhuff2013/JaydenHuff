@@ -1,0 +1,73 @@
+---
+title: "Discord Server Moderation with Google Apps Bot"
+sidebarTitle: "Moderation"
+description: "Keep your Discord server safe with Google Apps' moderation tools — spam filters, automated rules, a strike system, and full command-based controls."
+---
+
+Google Apps gives server administrators a powerful, flexible moderation suite designed to keep communities safe and well-managed. From automated spam detection to granular permission-based commands, every moderation action is handled directly through the bot or the dashboard — no third-party tools required.
+
+## Auto-Moderation Rules
+
+Auto-moderation rules run silently in the background, catching problematic content before it disrupts your community. Each rule can be configured independently from the **Moderation → Auto-Mod** section of your dashboard.
+
+- **Spam Filters** — Detect and delete repeated messages, rapid-fire posting, or message flooding. Set a threshold for how many messages per second trigger a warning or auto-mute.
+- **Link Filters** — Block links from specific domains, all external URLs, or known malicious sites. You can whitelist trusted domains so announcements and bots are unaffected.
+- **Bad-Word Filters** — Maintain a custom blocked-word list. Words or phrases in this list are automatically deleted and optionally logged. Wildcards (`*`) are supported for partial matches.
+
+<Note>
+  All auto-moderation actions are logged automatically in your designated moderation log channel, including which rule was triggered and what action was taken.
+</Note>
+
+## Moderation Commands
+
+The following slash commands are available to members with the appropriate permissions. All commands are issued directly in any channel the bot has access to.
+
+| Command | Description | Usage Example | Required Permission |
+|---|---|---|---|
+| `/ban` | Permanently bans a member from the server | `/ban @user Repeated spam` | Ban Members |
+| `/kick` | Removes a member from the server (they can rejoin) | `/kick @user Breaking rule #3` | Kick Members |
+| `/mute` | Prevents a member from sending messages | `/mute @user 30m Spamming` | Manage Roles |
+| `/warn` | Issues an official warning and adds a strike | `/warn @user Inappropriate language` | Manage Messages |
+| `/timeout` | Temporarily restricts all interactions for a member | `/timeout @user 1h Ignoring warnings` | Moderate Members |
+
+```bash
+# Ban a member with a reason
+/ban @username Repeated violations of community rules
+
+# Mute a member for 1 hour
+/mute @username 1h Spamming in #general
+
+# Issue a warning
+/warn @username Please keep discussions on-topic
+```
+
+## Strike System
+
+The strike system tracks warnings issued via `/warn` and automatically escalates punishments as infractions accumulate. This ensures consistent, fair enforcement without requiring moderators to manually review histories each time.
+
+- **1 strike** — Warning recorded; no automatic action.
+- **2 strikes** — Automatic 1-hour mute applied.
+- **3 strikes** — Automatic 24-hour timeout applied.
+- **5 strikes** — Automatic kick from the server.
+- **7 strikes** — Permanent ban issued.
+
+Strike thresholds and the associated auto-actions are fully customizable under **Moderation → Strike System** in the dashboard. You can also manually reset or reduce a member's strike count from their profile page in the dashboard.
+
+<Note>
+  Every strike issued — whether manually by a moderator or automatically by an auto-mod rule — is logged with a timestamp, the responsible moderator or system, and the stated reason.
+</Note>
+
+## Moderation Logs
+
+A complete history of all moderation actions is available in the **Moderation → Logs** section of your dashboard. Log entries include:
+
+- The action taken (ban, kick, mute, warn, timeout, or auto-mod trigger)
+- The target member
+- The moderator or system that performed the action
+- A timestamp and the reason provided
+
+Logs are also posted in real time to your designated moderation log channel on Discord, so your mod team stays informed without needing to check the dashboard constantly.
+
+## Configuration
+
+Moderation settings — including auto-mod rules, strike thresholds, log channel assignments, and command permissions — are all managed from the dashboard. See the [Server Settings](/discord/server-settings) guide for a full walkthrough of the configuration options available.

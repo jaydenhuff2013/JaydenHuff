@@ -1,0 +1,108 @@
+---
+title: "Manage Your Google Apps Account Settings"
+sidebarTitle: "Account Settings"
+description: "Update your profile, secure your account with 2FA, manage notification preferences, configure workspace settings, and control account deletion."
+---
+
+Your account settings give you full control over how Google Apps looks, behaves, and communicates with you. From updating your display name and time zone to enabling two-factor authentication and customizing your workspace, everything is accessible from **Settings** in the left sidebar. Changes to personal settings only affect your own account; workspace-level settings are visible to all admins.
+
+## Profile Settings
+
+Your profile is how teammates identify you across projects, comments, and notifications.
+
+To update your profile, go to **Settings > Profile**:
+
+- **Name** — Change the display name shown on tasks, comments, and mentions.
+- **Email address** — Update your login email. A verification link will be sent to the new address before the change takes effect.
+- **Avatar** — Upload a profile photo (PNG or JPG, up to 2MB). If no photo is uploaded, your initials are displayed.
+- **Timezone** — Set your local time zone so that due dates, notifications, and timestamps are displayed in your local time. This does not affect other team members.
+
+Click **Save Changes** after making updates to your profile.
+
+## Security
+
+Keeping your account secure protects your entire workspace. Google Apps provides several tools to manage your account's security posture.
+
+**Change Password**
+
+Go to **Settings > Security** and click **Change Password**. You'll need to enter your current password before setting a new one. Passwords must be at least 12 characters.
+
+**Two-Factor Authentication (2FA)**
+
+<Tip>
+  Enabling two-factor authentication is one of the most effective steps you can take to protect your account. Even if your password is compromised, 2FA prevents unauthorized access.
+</Tip>
+
+To enable 2FA:
+
+1. Go to **Settings > Security > Two-Factor Authentication**.
+2. Click **Enable 2FA** and scan the QR code with an authenticator app (e.g., Google Authenticator, Authy, or 1Password).
+3. Enter the 6-digit code shown in your app to confirm setup.
+4. Save your **backup codes** in a secure location — these can be used if you lose access to your authenticator app.
+
+**Active Sessions**
+
+The **Active Sessions** panel (under **Settings > Security**) shows all devices and locations where your account is currently signed in, including the browser, OS, and last active timestamp. Click **Revoke** next to any session you don't recognize to immediately sign it out.
+
+**Revoke Third-Party Access**
+
+Under **Settings > Security > Authorized Apps**, you can view and revoke access for any third-party applications or OAuth integrations that have been granted access to your account.
+
+## Notification Preferences
+
+Google Apps can notify you via email, in-app alerts, and Slack. You control exactly which events trigger a notification for each channel.
+
+To configure notifications, go to **Settings > Notifications**:
+
+| Event                        | Email | In-App | Slack |
+|------------------------------|-------|--------|-------|
+| Task assigned to me          | ✓     | ✓      | ✓     |
+| Task due date approaching    | ✓     | ✓      | ✗     |
+| Task completed               | ✗     | ✓      | ✓     |
+| Comment mentioning me        | ✓     | ✓      | ✓     |
+| New team member invited      | ✗     | ✓      | ✗     |
+| Project status changed       | ✓     | ✓      | ✓     |
+| Weekly digest                | ✓     | ✗      | ✗     |
+
+Toggle each channel on or off per event type using the checkboxes. Slack notifications require the Slack integration to be connected under **Settings > Integrations**.
+
+You can also set **Notification Quiet Hours** — a time window during which no email or Slack notifications are sent. In-app notifications are still collected and shown when you next log in.
+
+## Workspace Settings
+
+Workspace settings apply to your entire organization and are only accessible to workspace **owners** and **admins**.
+
+Navigate to **Settings > Workspace** to configure:
+
+- **Workspace Name** — The name displayed in the sidebar, emails, and invoices.
+- **Workspace Logo** — Upload a PNG or SVG logo (recommended: 200×200px or larger) to brand your workspace.
+- **Default Project View** — Choose whether new projects open in **Board**, **List**, or **Timeline** view by default. Individual members can override this for their own sessions.
+- **URL Slug** — Customize the workspace URL (e.g., `app.googleapps.com/yourcompany`). Changing the slug immediately invalidates any previous invite links.
+
+Click **Save Workspace Settings** to apply changes. Workspace name and logo updates are visible to all members immediately.
+
+## Deleting Your Account
+
+Deleting your account is permanent and cannot be undone. If you are the only owner of a workspace, you must either transfer ownership to another member or delete the workspace before deleting your account.
+
+<Warning>
+  **Account deletion is irreversible.** All of your personal data, profile information, and any workspaces you solely own will be permanently deleted. There is no recovery option after deletion is confirmed. Export any important data before proceeding.
+</Warning>
+
+<Steps>
+  <Step title="Export Your Data">
+    Before deleting your account, go to **Settings > Export** and download a full backup of your workspaces, projects, and tasks.
+  </Step>
+  <Step title="Transfer or Delete Owned Workspaces">
+    If you are the sole owner of any workspaces, go to each workspace's **Settings > Members**, promote another member to **Owner**, or delete the workspace entirely from **Settings > Workspace > Delete Workspace**.
+  </Step>
+  <Step title="Open Account Deletion">
+    Go to **Settings > Account** and scroll to the **Danger Zone** section. Click **Delete My Account**.
+  </Step>
+  <Step title="Confirm Your Identity">
+    Enter your account password to confirm your identity and acknowledge that the deletion is permanent.
+  </Step>
+  <Step title="Submit Deletion Request">
+    Click **Permanently Delete Account**. Your account will be scheduled for deletion and fully removed within **24 hours**. You will receive a confirmation email at your registered address.
+  </Step>
+</Steps>

@@ -1,0 +1,61 @@
+---
+title: "Connect Google Apps to Your Favorite Tools"
+sidebarTitle: "Integrations"
+description: "Extend Google Apps by connecting it to Slack, GitHub, Google Calendar, Zapier, and more. Learn how to authorize and manage your integrations."
+---
+
+Google Apps connects seamlessly with the tools your team already uses. Whether you want to receive Slack notifications when a task is completed, link GitHub pull requests to project tasks, or automate workflows through Zapier, integrations keep your work in sync without manual effort. All integrations are managed from a single place in your account settings.
+
+## Available Integrations
+
+<CardGroup cols={2}>
+  <Card title="Slack" icon="slack">
+    Receive real-time notifications in any Slack channel when tasks are created, updated, or completed. Keep your team informed without leaving Slack.
+  </Card>
+  <Card title="GitHub" icon="github">
+    Link commits, pull requests, and issues directly to Google Apps tasks. Track development progress alongside your project management workflow.
+  </Card>
+  <Card title="Google Calendar" icon="calendar">
+    Automatically sync task due dates and project milestones to Google Calendar so nothing falls through the cracks.
+  </Card>
+  <Card title="Zapier" icon="bolt">
+    Connect Google Apps to 5,000+ apps through Zapier. Build automated workflows without writing a single line of code.
+  </Card>
+  <Card title="Email" icon="envelope">
+    Send task updates, project summaries, and deadline reminders directly via email to team members or external stakeholders.
+  </Card>
+  <Card title="Webhooks" icon="webhook">
+    Trigger custom HTTP notifications to any endpoint when events occur in Google Apps. Ideal for building custom integrations and internal tooling.
+  </Card>
+</CardGroup>
+
+## How to Connect an Integration
+
+<Steps>
+  <Step title="Open Integration Settings">
+    Navigate to **Settings** in the left sidebar, then select **Integrations** from the settings menu.
+  </Step>
+  <Step title="Choose Your Integration">
+    Browse the list of available integrations and click the one you want to connect. You'll be taken to that integration's configuration page.
+  </Step>
+  <Step title="Authorize Access">
+    Click **Connect** and follow the authorization flow. For OAuth-based integrations (Slack, GitHub, Google Calendar), you'll be redirected to the provider's login page to grant permissions.
+  </Step>
+  <Step title="Configure Settings">
+    Once authorized, configure the integration options — such as which channel receives Slack notifications, which GitHub repository to link, or which calendar to sync. Click **Save** when done.
+  </Step>
+</Steps>
+
+## Managing Connected Integrations
+
+After connecting an integration, it appears in your **Active Integrations** list under **Settings > Integrations**. From there you can:
+
+- **Edit** configuration options at any time by clicking the integration name.
+- **Pause** an integration temporarily without removing its authorization.
+- **Disconnect** an integration by clicking the three-dot menu and selecting **Remove**. This revokes Google Apps' access to the third-party service.
+
+Changes to integration settings take effect immediately. Disconnecting an integration does not delete historical data that was already synced.
+
+<Note>
+  When you authorize a third-party integration using OAuth, Google Apps requests only the minimum permissions required for that integration to function. You can review and revoke these permissions at any time from the connected service's own security settings (for example, your GitHub account's authorized OAuth apps page).
+</Note>
