@@ -1,15 +1,65 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "luma",
-  "name": "Google Apps",
+  "theme": "almond",
+  "name": "Costum Stuff",
   "colors": {
-    "primary": "#ef7025",
-    "light": "#eec9bc",
-    "dark": "#4fa1ab"
+    "primary": "#7C3AED",
+    "light": "#A78BFA",
+    "dark": "#5B21B6"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
+      {
+        "tab": "Store",
+        "groups": [
+          {
+            "group": "Get Started",
+            "icon": "rocket",
+            "pages": [
+              "index",
+              "index",
+              "quickstart",
+              "get-started/account-setup"
+            ]
+          },
+          {
+            "group": "Shop",
+            "icon": "bag-shopping",
+            "pages": [
+              "shop/browse-products",
+              "shop/custom-orders",
+              "shop/checkout",
+              "shop/shipping-and-tracking",
+              "shop/returns"
+            ]
+          },
+          {
+            "group": "Account & Billing",
+            "icon": "user",
+            "pages": [
+              "account/profile",
+              "account/payment-methods",
+              "account/order-history"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Community",
+        "groups": [
+          {
+            "group": "Discord",
+            "icon": "discord",
+            "pages": [
+              "discord/join-server",
+              "discord/link-account",
+              "discord/roles-and-perks",
+              "discord/community-rules"
+            ]
+          }
+        ]
+      },
       {
         "tab": "Discord App",
         "groups": [
@@ -51,6 +101,20 @@
             "pages": [
               "discord/faq",
               "discord/troubleshooting"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Help",
+        "groups": [
+          {
+            "group": "Help",
+            "icon": "circle-question",
+            "pages": [
+              "help/faq",
+              "help/troubleshooting",
+              "help/contact-support"
             ]
           }
         ]
@@ -102,23 +166,7 @@
       }
     ]
   },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@googleapps.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.googleapps.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/google",
-      "github": "https://github.com/google"
-    }
+  "styling": {
+    "eyebrows": "breadcrumbs"
   }
 }
