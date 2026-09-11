@@ -65,43 +65,23 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": [
-              "discord/introduction",
-              "discord/quickstart",
-              "discord/invite-bot"
-            ]
+            "pages": []
           },
           {
             "group": "Core Features",
-            "pages": [
-              "discord/moderation",
-              "discord/auto-roles",
-              "discord/welcome-messages",
-              "discord/logging"
-            ]
+            "pages": []
           },
           {
             "group": "Commands",
-            "pages": [
-              "discord/commands-overview",
-              "discord/admin-commands",
-              "discord/utility-commands"
-            ]
+            "pages": []
           },
           {
             "group": "Configuration",
-            "pages": [
-              "discord/server-settings",
-              "discord/permissions",
-              "discord/integrations"
-            ]
+            "pages": []
           },
           {
             "group": "Help",
-            "pages": [
-              "discord/faq",
-              "discord/troubleshooting"
-            ]
+            "pages": []
           }
         ]
       },
