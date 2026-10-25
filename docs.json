@@ -3,11 +3,14 @@
   "theme": "almond",
   "name": "Costum Stuff",
   "colors": {
-    "primary": "#7C3AED",
-    "light": "#A78BFA",
-    "dark": "#5B21B6"
+    "primary": "#5865F2",
+    "light": "#8EA1FF",
+    "dark": "#4752C4"
   },
   "favicon": "/favicon.svg",
+  "customHead": [
+    "<link rel='stylesheet' href='/custom.css'>"
+  ],
   "navigation": {
     "tabs": [
       {
