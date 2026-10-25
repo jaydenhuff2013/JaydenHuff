@@ -67,7 +67,8 @@
             "group": "Get Started",
             "pages": [
               "discord-app/overview",
-              "discord-app/quickstart"
+              "discord-app/quickstart",
+              "discord-app/app-demo"
             ]
           },
           {

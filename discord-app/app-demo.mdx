@@ -1,0 +1,362 @@
+---
+title: "App preview"
+sidebarTitle: "App preview"
+description: "Explore a Discord-style app interface built as a lightweight web mock for Costum Stuff."
+---
+
+# Costum Stuff app preview
+
+This page shows a working web mock of the app experience. It is designed to mirror a modern Discord-style chat environment with servers, channels, messages, and a download CTA.
+
+<div class="app-shell">
+  <aside class="server-bar">
+    <div class="server active">C</div>
+    <div class="server">S</div>
+    <div class="server">D</div>
+    <div class="server add">+</div>
+  </aside>
+
+  <aside class="channel-bar">
+    <div class="server-name">Costum Stuff</div>
+    <div class="channel-header">Text Channels</div>
+    <div class="channel active"># welcome</div>
+    <div class="channel"># announcements</div>
+    <div class="channel"># support</div>
+    <div class="channel"># community</div>
+    <div class="channel"># drops</div>
+    <div class="channel-header">Voice</div>
+    <div class="channel"># lounge</div>
+    <div class="channel"># events</div>
+  </aside>
+
+  <main class="chat-panel">
+    <header class="chat-header">
+      <div>
+        <strong># welcome</strong>
+      </div>
+      <button class="download-pill">Download app</button>
+    </header>
+
+    <div class="messages">
+      <div class="message-row">
+        <div class="avatar blue">A</div>
+        <div class="bubble">
+          <div class="author">Ariel</div>
+          <div class="text">Welcome to Costum Stuff! New drops go live every Friday.</div>
+        </div>
+      </div>
+
+      <div class="message-row">
+        <div class="avatar purple">J</div>
+        <div class="bubble">
+          <div class="author">Jamie</div>
+          <div class="text">I just joined. Can someone tell me where the support channel is?</div>
+        </div>
+      </div>
+
+      <div class="message-row">
+        <div class="avatar green">M</div>
+        <div class="bubble">
+          <div class="author">Milo</div>
+          <div class="text">It is right here in #support. We also have a product drop thread today.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="composer">
+      <input id="messageInput" type="text" placeholder="Message #welcome" />
+      <button id="sendButton">Send</button>
+    </div>
+  </main>
+
+  <aside class="member-bar">
+    <div class="member-header">ONLINE</div>
+    <div class="member"><span class="dot green"></span> Ariel</div>
+    <div class="member"><span class="dot purple"></span> Jamie</div>
+    <div class="member"><span class="dot blue"></span> Milo</div>
+    <div class="member"><span class="dot orange"></span> Nova</div>
+    <div class="member"><span class="dot pink"></span> Quinn</div>
+  </aside>
+</div>
+
+<style>
+  .app-shell {
+    display: grid;
+    grid-template-columns: 72px 260px minmax(0, 1fr) 220px;
+    height: 620px;
+    background: #1f2333;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-top: 2rem;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  }
+
+  .server-bar {
+    background: #111827;
+    padding: 18px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .server {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: #374151;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .server.active {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    border-radius: 14px;
+  }
+
+  .server.add {
+    background: #1f2937;
+    border: 1px dashed rgba(255,255,255,0.25);
+  }
+
+  .channel-bar {
+    background: #23283a;
+    padding: 18px 14px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .server-name {
+    font-weight: 700;
+    color: white;
+    margin-bottom: 18px;
+    font-size: 1.1rem;
+  }
+
+  .channel-header {
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    margin: 16px 0 10px;
+  }
+
+  .channel {
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #dbe5f3;
+    margin: 4px 0;
+    cursor: pointer;
+  }
+
+  .channel.active {
+    background: rgba(139, 92, 246, 0.18);
+    color: white;
+    font-weight: 600;
+  }
+
+  .chat-panel {
+    background: #1d2232;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .chat-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+
+  .download-pill {
+    background: #7C3AED;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .messages {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+  }
+
+  .message-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .avatar.blue { background: #3b82f6; }
+  .avatar.purple { background: #8b5cf6; }
+  .avatar.green { background: #22c55e; }
+  .avatar.orange { background: #f59e0b; }
+  .avatar.pink { background: #ec4899; }
+
+  .bubble {
+    background: rgba(148, 163, 184, 0.08);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: #e5e7eb;
+    max-width: 80%;
+  }
+
+  .author {
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #f3f4f6;
+  }
+
+  .composer {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px 18px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .composer input {
+    flex: 1;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    color: white;
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+  }
+
+  .composer button {
+    background: #7C3AED;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .member-bar {
+    background: #1d2232;
+    border-left: 1px solid rgba(255,255,255,0.06);
+    padding: 18px 14px;
+    color: #dbe5f3;
+  }
+
+  .member-header {
+    color: #94a3b8;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .member {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 6px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot.green { background: #22c55e; }
+  .dot.purple { background: #8b5cf6; }
+  .dot.blue { background: #3b82f6; }
+  .dot.orange { background: #f59e0b; }
+  .dot.pink { background: #ec4899; }
+
+  @media (max-width: 980px) {
+    .app-shell {
+      grid-template-columns: 60px 200px 1fr;
+    }
+
+    .member-bar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .app-shell {
+      grid-template-columns: 60px 1fr;
+    }
+
+    .chat-panel {
+      grid-column: 2;
+    }
+
+    .channel-bar {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById('sendButton')?.addEventListener('click', function () {
+    const input = document.getElementById('messageInput');
+    if (!input || !input.value.trim()) return;
+
+    const row = document.createElement('div');
+    row.className = 'message-row';
+    row.innerHTML = `
+      <div class="avatar purple">Y</div>
+      <div class="bubble">
+        <div class="author">You</div>
+        <div class="text">${input.value.trim()}</div>
+      </div>
+    `;
+
+    document.querySelector('.messages')?.appendChild(row);
+    input.value = '';
+    const container = document.querySelector('.messages');
+    if (container) container.scrollTop = container.scrollHeight;
+  });
+</script>
+
+## App features
+
+<CardGroup cols={3}>
+  <Card title="Live chat" icon="message-circle">
+    Message friends, team members, or customers in real time.
+  </Card>
+  <Card title="Voice rooms" icon="microphone">
+    Host events, calls, and community hangouts without leaving the app.
+  </Card>
+  <Card title="Fast install" icon="download">
+    Download the app and start using the full experience in minutes.
+  </Card>
+</CardGroup>
+
+## Download the app
+
+- [Download for Windows](https://example.com/download/costumstuff-windows)
+- [Download for Mac](https://example.com/download/costumstuff-mac)
+- [Download for Android](https://example.com/download/costumstuff-android)
+- [Download for iPhone](https://example.com/download/costumstuff-ios)
+
+<Note>
+  Replace the example links with your real app URLs before publishing.
+</Note>
