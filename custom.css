@@ -1,0 +1,267 @@
+:root {
+  --discord-bg: #1e1f22;
+  --discord-bg-alt: #18191c;
+  --discord-panel: #2b2d31;
+  --discord-panel-strong: #232428;
+  --discord-sidebar: #202225;
+  --discord-sidebar-alt: #111214;
+  --discord-card: #313338;
+  --discord-hover: #3a3d42;
+  --discord-text: #f2f3f5;
+  --discord-muted: #b5bac1;
+  --discord-accent: #5865f2;
+  --discord-accent-strong: #4752c4;
+  --discord-green: #57f287;
+  --discord-border: rgba(255, 255, 255, 0.08);
+  --discord-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+html {
+  color-scheme: dark;
+  background: var(--discord-bg);
+}
+
+body {
+  background: var(--discord-bg) !important;
+  background-image: radial-gradient(circle at top, rgba(88, 101, 242, 0.14), transparent 40%), var(--discord-bg) !important;
+  color: var(--discord-text) !important;
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+body, p, li, td, th, div, span, label {
+  color: var(--discord-text) !important;
+}
+
+main, .content, .mdx-content, .docs-content, .prose, article {
+  background: transparent !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--discord-text) !important;
+  letter-spacing: -0.02em;
+}
+
+p, li, blockquote {
+  color: var(--discord-muted) !important;
+}
+
+code {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #dfe3ff !important;
+  border: 1px solid var(--discord-border);
+  border-radius: 6px;
+}
+
+pre {
+  background: #191b1f !important;
+  border: 1px solid var(--discord-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--discord-shadow);
+}
+
+pre code {
+  background: transparent !important;
+  border: none !important;
+}
+
+blockquote {
+  background: rgba(88, 101, 242, 0.08);
+  border-left: 3px solid var(--discord-accent) !important;
+  color: var(--discord-text) !important;
+  border-radius: 8px;
+}
+
+hr {
+  border-color: var(--discord-border) !important;
+}
+
+nav,
+.sidebar,
+.docs-sidebar,
+.mdx-sidebar,
+[role="navigation"],
+header,
+.topbar,
+.navbar,
+.table-of-contents,
+.toc {
+  background: var(--discord-sidebar) !important;
+  border-color: var(--discord-border) !important;
+  color: var(--discord-text) !important;
+}
+
+.sidebar a,
+nav a,
+.nav a,
+.toc a,
+.topbar a {
+  color: var(--discord-muted) !important;
+  transition: 0.2s ease;
+}
+
+.sidebar a:hover,
+nav a:hover,
+.nav a:hover,
+.toc a:hover,
+.topbar a:hover {
+  color: var(--discord-text) !important;
+}
+
+.sidebar a.active,
+.nav a.active,
+.toc a.active,
+nav a[aria-current="page"],
+nav a.active {
+  background: rgba(88, 101, 242, 0.18) !important;
+  color: var(--discord-text) !important;
+  border: 1px solid rgba(88, 101, 242, 0.35) !important;
+  border-radius: 8px;
+}
+
+button,
+.button,
+[role="button"],
+input,
+select,
+textarea {
+  background: var(--discord-panel) !important;
+  color: var(--discord-text) !important;
+  border: 1px solid var(--discord-border) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+button:hover,
+.button:hover,
+[role="button"]:hover {
+  background: var(--discord-hover) !important;
+}
+
+button.primary,
+.button.primary,
+a[href*="/download"],
+a[href*="quickstart"],
+.card a,
+.button-link {
+  background: linear-gradient(135deg, var(--discord-accent), var(--discord-accent-strong)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(88, 101, 242, 0.35);
+}
+
+.card,
+.Card,
+[data-card],
+[class*="Card"],
+[class*="card"] {
+  background: linear-gradient(180deg, rgba(49, 51, 56, 0.96), rgba(43, 45, 49, 0.96)) !important;
+  border: 1px solid var(--discord-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--discord-shadow) !important;
+  color: var(--discord-text) !important;
+}
+
+.card h3,
+.Card h3,
+[class*="Card"] h3 {
+  color: var(--discord-text) !important;
+}
+
+.card p,
+.Card p,
+[class*="Card"] p {
+  color: var(--discord-muted) !important;
+}
+
+th,
+td {
+  border-color: var(--discord-border) !important;
+  color: var(--discord-text) !important;
+}
+
+table {
+  background: rgba(255, 255, 255, 0.01) !important;
+  border: 1px solid var(--discord-border) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+a {
+  color: #c4c9ff !important;
+  text-decoration-color: rgba(196, 201, 255, 0.4);
+}
+
+a:hover {
+  color: #ffffff !important;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(181, 186, 193, 0.8) !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--discord-bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b3f46;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4f57;
+}
+
+img {
+  border-radius: 12px;
+}
+
+.note,
+[role="note"],
+.warning,
+.tip,
+.info {
+  background: rgba(88, 101, 242, 0.08) !important;
+  border: 1px solid rgba(88, 101, 242, 0.3) !important;
+  color: var(--discord-text) !important;
+  border-radius: 12px;
+}
+
+.search,
+.search-box,
+[role="search"],
+input[type="search"] {
+  background: var(--discord-panel) !important;
+  border: 1px solid var(--discord-border) !important;
+  color: var(--discord-text) !important;
+}
+
+mark {
+  background: rgba(87, 242, 135, 0.18) !important;
+  color: var(--discord-text) !important;
+}
+
+iframe,
+video,
+canvas {
+  border: 1px solid var(--discord-border);
+  border-radius: 12px;
+}
+
+/* Mintlify home CTA block */
+[style*="background: #7C3AED"],
+[style*="background: #7c3aed"],
+[style*="background: rgb(124, 58, 237)"],
+[style*="background: #5865F2"],
+[style*="background: rgb(88, 101, 242)"] {
+  background: linear-gradient(135deg, var(--discord-accent), var(--discord-accent-strong)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 14px 30px rgba(88, 101, 242, 0.35);
+}
