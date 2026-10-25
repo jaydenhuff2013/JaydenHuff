@@ -95,6 +95,18 @@
         ]
       },
       {
+        "tab": "Tools",
+        "groups": [
+          {
+            "group": "Utilities",
+            "icon": "cloud-sun",
+            "pages": [
+              "weather-dashboard"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Help",
         "groups": [
           {
